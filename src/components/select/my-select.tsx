@@ -15,7 +15,8 @@ export class MySelect {
 
   @Element() el!: HTMLElement;
 
-  toggleDropdown() {
+  toggleDropdown(event: Event) {
+    event.stopPropagation(); // Prevent click propagation when opening
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
       document.addEventListener('click', this.handleOutsideClick);
@@ -38,6 +39,12 @@ export class MySelect {
     document.removeEventListener('click', this.handleOutsideClick);
   }
 
+  clearSelection(event: Event) {
+    event.stopPropagation(); // Prevent dropdown toggle when clearing
+    this.selected = null;
+    this.valueChanged.emit('');
+  }
+
   disconnectedCallback() {
     document.removeEventListener('click', this.handleOutsideClick);
   }
@@ -46,9 +53,18 @@ export class MySelect {
     return (
       <div class="select-container">
         <label>{this.label}</label>
-        <div class="select-box" onClick={() => this.toggleDropdown()}>
+        <div class="select-box" onClick={event => this.toggleDropdown(event)}>
           <span>{this.selected ? this.selected.label : 'Choose an option'}</span>
-          <button>{this.isOpen ? '▲' : '▼'}</button>
+          <div class="buttons">
+            {this.selected && (
+              <button class="clear-btn" onClick={event => this.clearSelection(event)}>
+                ✖
+              </button>
+            )}
+            <button class="toggle-btn" onClick={event => this.toggleDropdown(event)}>
+              {this.isOpen ? '▲' : '▼'}
+            </button>
+          </div>
         </div>
         {this.isOpen && (
           <ul class="dropdown">
