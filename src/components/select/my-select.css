@@ -1,0 +1,51 @@
+.select-container {
+  font-family: Arial, sans-serif;
+  width: 200px;
+  position: relative;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.select-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background: white;
+}
+
+.select-box:hover {
+  background: #f0f0f0;
+}
+
+.dropdown {
+  list-style: none;
+  margin: 1px 0 0 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.dropdown li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown li:hover {
+  background: #f0f0f0;
+}
+
+.selected {
+  font-weight: bold;
+  color: green;
+}
