@@ -5,7 +5,10 @@ import { Component, h } from '@stencil/core';
   shadow: false,
 })
 export class MyApp {
-  private options = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
+  private options = [
+    { label: 'First Item', value: 'first' },
+    { label: 'Second Item', value: 'second' },
+  ];
 
   handleOptionSelected(event: CustomEvent<string>) {
     console.log('Option selected:', event.detail);
@@ -14,7 +17,7 @@ export class MyApp {
   render() {
     return (
       <div>
-        <my-select options={this.options} />
+        <my-select options={this.options} onValueChanged={event => this.handleOptionSelected(event)}></my-select>
       </div>
     );
   }

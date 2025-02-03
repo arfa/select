@@ -3,13 +3,13 @@ import { Component, h, Prop, State, Event, EventEmitter, Element } from '@stenci
 @Component({
   tag: 'my-select',
   styleUrl: 'my-select.css',
-  shadow: true,
+  shadow: false,
 })
 export class MySelect {
   @Prop() label: string = 'Select an option';
-  @Prop() options: string[] = [];
+  @Prop() options: { label: any; value: string }[] = [];
   @State() isOpen: boolean = false;
-  @State() selected: string = '';
+  @State() selected: { label: any; value: string } | null = null;
 
   @Event() valueChanged: EventEmitter<string>;
 
@@ -31,10 +31,10 @@ export class MySelect {
     }
   };
 
-  selectOption(option: string) {
+  selectOption(option: { label: any; value: string }) {
     this.selected = option;
     this.isOpen = false;
-    this.valueChanged.emit(option);
+    this.valueChanged.emit(option.value);
     document.removeEventListener('click', this.handleOutsideClick);
   }
 
@@ -47,14 +47,14 @@ export class MySelect {
       <div class="select-container">
         <label>{this.label}</label>
         <div class="select-box" onClick={() => this.toggleDropdown()}>
-          <span>{this.selected || 'Choose an option'}</span>
+          <span>{this.selected ? this.selected.label : 'Choose an option'}</span>
           <button>{this.isOpen ? '▲' : '▼'}</button>
         </div>
         {this.isOpen && (
           <ul class="dropdown">
             {this.options.map(option => (
-              <li class={option === this.selected ? 'selected' : ''} onClick={() => this.selectOption(option)}>
-                {option}
+              <li class={option.value === this.selected?.value ? 'selected' : ''} onClick={() => this.selectOption(option)}>
+                {option.label}
               </li>
             ))}
           </ul>
