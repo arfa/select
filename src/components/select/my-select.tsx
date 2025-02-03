@@ -17,12 +17,29 @@ export class MySelect {
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;
+    if (this.isOpen) {
+      document.addEventListener('click', this.handleOutsideClick);
+    } else {
+      document.removeEventListener('click', this.handleOutsideClick);
+    }
   }
+
+  handleOutsideClick = (event: MouseEvent) => {
+    if (!this.el.contains(event.target as Node)) {
+      this.isOpen = false;
+      document.removeEventListener('click', this.handleOutsideClick);
+    }
+  };
 
   selectOption(option: string) {
     this.selected = option;
     this.isOpen = false;
     this.valueChanged.emit(option);
+    document.removeEventListener('click', this.handleOutsideClick);
+  }
+
+  disconnectedCallback() {
+    document.removeEventListener('click', this.handleOutsideClick);
   }
 
   render() {
