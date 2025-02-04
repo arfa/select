@@ -81,7 +81,12 @@ export class MySelect {
     } else if (this.selected.length === 1) {
       return this.selected[0].label;
     } else {
-      return `${this.selected.length} items selected`;
+      return (
+        <span class="counter-wrapper">
+          <span class="counter">{this.selected.length}</span>
+          <span class="counter-text">items selected</span>
+        </span>
+      );
     }
   }
 

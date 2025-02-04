@@ -95,3 +95,26 @@ label {
   text-align: center;
   color: grey;
 }
+
+.counter-wrapper {
+  display: flex;
+  justify-content: inbetween;
+  align-items: center;
+}
+
+.counter {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  min-width: 20px;
+  height: 20px;
+  padding: 5px;
+  border-radius: 100%;
+  background: green;
+  color: white;
+}
+
+.counter-text {
+  margin-left: 5px;
+}
