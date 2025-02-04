@@ -8,15 +8,17 @@ import { Component, h, Prop, State, Event, EventEmitter, Element } from '@stenci
 export class MySelect {
   @Prop() label: string = 'Select an option';
   @Prop() options: { label: any; value: string }[] = [];
-  @State() isOpen: boolean = false;
-  @State() selected: { label: any; value: string } | null = null;
+  @Prop() multiSelect: boolean = false;
 
-  @Event() valueChanged: EventEmitter<string>;
+  @State() isOpen: boolean = false;
+  @State() selected: { label: any; value: string }[] = [];
+
+  @Event() valueChanged: EventEmitter<string | string[]>;
 
   @Element() el!: HTMLElement;
 
   toggleDropdown(event: Event) {
-    event.stopPropagation(); // Prevent click propagation when opening
+    event.stopPropagation(); // Prevent unwanted dropdown toggling
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
       document.addEventListener('click', this.handleOutsideClick);
@@ -33,20 +35,40 @@ export class MySelect {
   };
 
   selectOption(option: { label: any; value: string }) {
-    this.selected = option;
-    this.isOpen = false;
-    this.valueChanged.emit(option.value);
-    document.removeEventListener('click', this.handleOutsideClick);
+    if (this.multiSelect) {
+      // Toggle selection in multi-select mode
+      const isSelected = this.selected.some(sel => sel.value === option.value);
+      this.selected = isSelected
+        ? this.selected.filter(sel => sel.value !== option.value) // Remove if already selected
+        : [...this.selected, option]; // Add if not selected
+      this.valueChanged.emit(this.selected.map(sel => sel.value)); // Emit array
+    } else {
+      // Single select mode
+      this.selected = [option];
+      this.isOpen = false;
+      this.valueChanged.emit(option.value);
+      document.removeEventListener('click', this.handleOutsideClick);
+    }
   }
 
   clearSelection(event: Event) {
     event.stopPropagation(); // Prevent dropdown toggle when clearing
-    this.selected = null;
-    this.valueChanged.emit('');
+    this.selected = [];
+    this.valueChanged.emit(this.multiSelect ? [] : '');
   }
 
   disconnectedCallback() {
     document.removeEventListener('click', this.handleOutsideClick);
+  }
+
+  getItemSelectedLabel() {
+    if (this.selected.length === 0) {
+      return 'Choose an option';
+    } else if (this.selected.length === 1) {
+      return this.selected[0].label;
+    } else {
+      return `${this.selected.length} items selected`;
+    }
   }
 
   render() {
@@ -54,9 +76,9 @@ export class MySelect {
       <div class="select-container">
         <label>{this.label}</label>
         <div class="select-box" onClick={event => this.toggleDropdown(event)}>
-          <span>{this.selected ? this.selected.label : 'Choose an option'}</span>
+          <span onClick={event => this.toggleDropdown(event)}>{this.getItemSelectedLabel()}</span>
           <div class="buttons">
-            {this.selected && (
+            {this.selected.length > 0 && (
               <button class="clear-btn" onClick={event => this.clearSelection(event)}>
                 ✖
               </button>
@@ -68,11 +90,15 @@ export class MySelect {
         </div>
         {this.isOpen && (
           <ul class="dropdown">
-            {this.options.map(option => (
-              <li class={option.value === this.selected?.value ? 'selected' : ''} onClick={() => this.selectOption(option)}>
-                {option.label}
-              </li>
-            ))}
+            {this.options.map(option => {
+              const isSelected = this.selected.some(sel => sel.value === option.value);
+              return (
+                <li class={isSelected ? 'selected' : ''} onClick={() => this.selectOption(option)}>
+                  {this.multiSelect && <input type="checkbox" checked={isSelected} />}
+                  {option.label}
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>

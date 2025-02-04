@@ -24,6 +24,7 @@ export namespace Components {
     }
     interface MySelect {
         "label": string;
+        "multiSelect": boolean;
         "options": { label: any; value: string }[];
     }
 }
@@ -45,7 +46,7 @@ declare global {
         new (): HTMLMyComponentElement;
     };
     interface HTMLMySelectElementEventMap {
-        "valueChanged": string;
+        "valueChanged": string | string[];
     }
     interface HTMLMySelectElement extends Components.MySelect, HTMLStencilElement {
         addEventListener<K extends keyof HTMLMySelectElementEventMap>(type: K, listener: (this: HTMLMySelectElement, ev: MySelectCustomEvent<HTMLMySelectElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -86,7 +87,8 @@ declare namespace LocalJSX {
     }
     interface MySelect {
         "label"?: string;
-        "onValueChanged"?: (event: MySelectCustomEvent<string>) => void;
+        "multiSelect"?: boolean;
+        "onValueChanged"?: (event: MySelectCustomEvent<string | string[]>) => void;
         "options"?: { label: any; value: string }[];
     }
     interface IntrinsicElements {

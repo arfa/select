@@ -10,14 +10,14 @@ export class MyApp {
     { label: 'Second Item', value: 'second' },
   ];
 
-  handleOptionSelected(event: CustomEvent<string>) {
+  handleOptionSelected(event: CustomEvent<string[] | string>) {
     console.log('Option selected:', event.detail);
   }
 
   render() {
     return (
       <div>
-        <my-select options={this.options} onValueChanged={event => this.handleOptionSelected(event)}></my-select>
+        <my-select options={this.options} onValueChanged={(event: CustomEvent<string[] | string>) => this.handleOptionSelected(event)}></my-select>
       </div>
     );
   }
