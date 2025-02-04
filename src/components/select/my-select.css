@@ -20,6 +20,12 @@ label {
   background: white;
 }
 
+.select-box span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .select-box:hover {
   background: #f0f0f0;
 }
@@ -49,6 +55,7 @@ label {
 .dropdown {
   position: absolute;
   width: 100%;
+  margin-top: 1px;
   background: white;
   border: 1px solid #ccc;
   max-height: 234px;
@@ -100,6 +107,7 @@ label {
 .selected {
   font-weight: bold;
   color: green;
+  background: var(--cib-color-cacib-100);
 }
 
 .no-results {

@@ -115,6 +115,16 @@ export class MySelect {
     }
   }
 
+  getTitle() {
+    if (this.selected.length === 0) {
+      return this.placeholder;
+    } else if (this.selected.length === 1) {
+      return this.selected[0].label;
+    } else {
+      return this.selected.map(sel => sel.label).join(', ');
+    }
+  }
+
   render() {
     const filteredOptions = this.enableSearch ? this.options.filter(option => option.label.toString().toLowerCase().includes(this.searchQuery.toLowerCase())) : this.options;
 
@@ -124,7 +134,9 @@ export class MySelect {
       <div class="select-container">
         <label>{this.label}</label>
         <div class="select-box" onClick={event => this.toggleDropdown(event)}>
-          <span onClick={event => this.toggleDropdown(event)}>{this.getItemSelectedLabel()}</span>
+          <span onClick={event => this.toggleDropdown(event)} title={this.getTitle()}>
+            {this.getItemSelectedLabel()}
+          </span>
           <div class="buttons">
             {this.selected.length > 0 && (
               <button class="clear-btn" onClick={event => this.clearSelection(event)}>

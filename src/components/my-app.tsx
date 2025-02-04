@@ -6,6 +6,7 @@ import { Component, h } from '@stencil/core';
 })
 export class MyApp {
   private options = [
+    { label: 'Very Looooooooooong First Item', value: 'long' },
     { label: 'First Item', value: 'first' },
     { label: 'Second Item', value: 'second' },
     { label: 'Third Item', value: 'third' },
