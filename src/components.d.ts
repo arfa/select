@@ -30,6 +30,7 @@ export namespace Components {
         "label": string;
         "multiSelect": boolean;
         "options": { label: any; value: string }[];
+        "placeholder": string;
     }
 }
 export interface MySelectCustomEvent<T> extends CustomEvent<T> {
@@ -98,6 +99,7 @@ declare namespace LocalJSX {
         "multiSelect"?: boolean;
         "onValueChanged"?: (event: MySelectCustomEvent<string | string[]>) => void;
         "options"?: { label: any; value: string }[];
+        "placeholder"?: string;
     }
     interface IntrinsicElements {
         "my-app": MyApp;

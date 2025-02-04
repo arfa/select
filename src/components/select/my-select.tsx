@@ -13,6 +13,7 @@ export class MySelect {
   @Prop() enableSelectAll: boolean = false;
   @Prop() enableSelectedItems: boolean = false;
   @Prop() defaultValue?: string | string[];
+  @Prop() placeholder: string = 'Choose an option';
 
   @State() isOpen: boolean = false;
   @State() selected: { label: any; value: string }[] = [];
@@ -101,7 +102,7 @@ export class MySelect {
 
   getItemSelectedLabel() {
     if (this.selected.length === 0) {
-      return 'Choose an option';
+      return this.placeholder;
     } else if (this.selected.length === 1) {
       return this.selected[0].label;
     } else {
