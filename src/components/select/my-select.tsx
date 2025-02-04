@@ -10,6 +10,7 @@ export class MySelect {
   @Prop() options: { label: any; value: string }[] = [];
   @Prop() multiSelect: boolean = false;
   @Prop() enableSearch: boolean = false;
+  @Prop() enableSelectAll: boolean = false;
 
   @State() isOpen: boolean = false;
   @State() selected: { label: any; value: string }[] = [];
@@ -71,6 +72,16 @@ export class MySelect {
     this.searchQuery = ''; // Clear search query when dropdown closes
   }
 
+  toggleSelectAll(event: Event) {
+    event.stopPropagation();
+    if (this.selected.length === this.options.length) {
+      this.selected = []; // Deselect all
+    } else {
+      this.selected = [...this.options]; // Select all
+    }
+    this.valueChanged.emit(this.selected.map(sel => sel.value));
+  }
+
   disconnectedCallback() {
     document.removeEventListener('click', this.handleOutsideClick);
   }
@@ -93,6 +104,8 @@ export class MySelect {
   render() {
     const filteredOptions = this.enableSearch ? this.options.filter(option => option.label.toString().toLowerCase().includes(this.searchQuery.toLowerCase())) : this.options;
 
+    const isAllSelected = this.selected.length === this.options.length;
+
     return (
       <div class="select-container">
         <label>{this.label}</label>
@@ -114,6 +127,12 @@ export class MySelect {
             {this.enableSearch && (
               <div class="search-container">
                 <input type="text" placeholder="Search..." value={this.searchQuery} onInput={event => this.handleSearch(event)} />
+              </div>
+            )}
+            {this.multiSelect && this.enableSelectAll && (
+              <div class="select-all" onClick={event => this.toggleSelectAll(event)}>
+                <input type="checkbox" checked={isAllSelected} />
+                <span>Select All</span>
               </div>
             )}
             <ul>

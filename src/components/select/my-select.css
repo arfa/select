@@ -51,7 +51,7 @@ label {
   width: 100%;
   background: white;
   border: 1px solid #ccc;
-  max-height: 200px;
+  max-height: 234px;
   overflow-y: auto;
   z-index: 10;
 }
@@ -65,6 +65,18 @@ label {
   width: 100%;
   padding: 5px;
   border: 1px solid #ccc;
+}
+
+.select-all {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.select-all input {
+  margin-right: 8px;
 }
 
 .dropdown ul {

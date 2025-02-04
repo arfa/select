@@ -24,6 +24,7 @@ export namespace Components {
     }
     interface MySelect {
         "enableSearch": boolean;
+        "enableSelectAll": boolean;
         "label": string;
         "multiSelect": boolean;
         "options": { label: any; value: string }[];
@@ -88,6 +89,7 @@ declare namespace LocalJSX {
     }
     interface MySelect {
         "enableSearch"?: boolean;
+        "enableSelectAll"?: boolean;
         "label"?: string;
         "multiSelect"?: boolean;
         "onValueChanged"?: (event: MySelectCustomEvent<string | string[]>) => void;

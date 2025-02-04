@@ -23,7 +23,13 @@ export class MyApp {
   render() {
     return (
       <div>
-        <my-select options={this.options} multiSelect enableSearch onValueChanged={(event: CustomEvent<string[] | string>) => this.handleOptionSelected(event)}></my-select>
+        <my-select
+          options={this.options}
+          multiSelect
+          enableSelectAll
+          enableSearch
+          onValueChanged={(event: CustomEvent<string[] | string>) => this.handleOptionSelected(event)}
+        ></my-select>
       </div>
     );
   }
