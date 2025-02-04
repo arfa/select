@@ -26,6 +26,7 @@ export class MyApp {
         <my-select
           options={this.options}
           multiSelect
+          enableSelectedItems
           enableSelectAll
           enableSearch
           onValueChanged={(event: CustomEvent<string[] | string>) => this.handleOptionSelected(event)}

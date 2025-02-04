@@ -11,6 +11,7 @@ export class MySelect {
   @Prop() multiSelect: boolean = false;
   @Prop() enableSearch: boolean = false;
   @Prop() enableSelectAll: boolean = false;
+  @Prop() enableSelectedItems: boolean = false;
 
   @State() isOpen: boolean = false;
   @State() selected: { label: any; value: string }[] = [];
@@ -129,18 +130,38 @@ export class MySelect {
                 <input type="text" placeholder="Search..." value={this.searchQuery} onInput={event => this.handleSearch(event)} />
               </div>
             )}
+            {this.enableSelectedItems && this.multiSelect && this.selected.length > 0 && (
+              <div class="selected-items-title">
+                <span>Selected items</span>
+              </div>
+            )}
+            <ul>
+              {this.enableSelectedItems && this.multiSelect && this.selected.length > 0 && (
+                <div class="selected-items">
+                  {this.selected.map(option => {
+                    return (
+                      <li key={option.value} class="selected" onClick={() => this.selectOption(option)}>
+                        <input type="checkbox" checked />
+                        {option.label}
+                      </li>
+                    );
+                  })}
+                </div>
+              )}
+            </ul>
             {this.multiSelect && this.enableSelectAll && (
               <div class="select-all" onClick={event => this.toggleSelectAll(event)}>
                 <input type="checkbox" checked={isAllSelected} />
                 <span>Select All</span>
               </div>
             )}
+            {this.enableSelectedItems && this.multiSelect && this.selected.length > 0 && <div class="options-title">List</div>}
             <ul>
               {filteredOptions.length > 0 ? (
                 filteredOptions.map(option => {
                   const isSelected = this.selected.some(sel => sel.value === option.value);
                   return (
-                    <li class={isSelected ? 'selected' : ''} onClick={() => this.selectOption(option)}>
+                    <li key={option.value} class={isSelected ? 'selected' : ''} onClick={() => this.selectOption(option)}>
                       {this.multiSelect && <input type="checkbox" checked={isSelected} />}
                       {option.label}
                     </li>
