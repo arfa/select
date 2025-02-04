@@ -23,6 +23,7 @@ export namespace Components {
         "middle": string;
     }
     interface MySelect {
+        "defaultValue"?: string | string[];
         "enableSearch": boolean;
         "enableSelectAll": boolean;
         "enableSelectedItems": boolean;
@@ -89,6 +90,7 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface MySelect {
+        "defaultValue"?: string | string[];
         "enableSearch"?: boolean;
         "enableSelectAll"?: boolean;
         "enableSelectedItems"?: boolean;

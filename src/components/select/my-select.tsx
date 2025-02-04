@@ -12,6 +12,7 @@ export class MySelect {
   @Prop() enableSearch: boolean = false;
   @Prop() enableSelectAll: boolean = false;
   @Prop() enableSelectedItems: boolean = false;
+  @Prop() defaultValue?: string | string[];
 
   @State() isOpen: boolean = false;
   @State() selected: { label: any; value: string }[] = [];
@@ -20,6 +21,17 @@ export class MySelect {
   @Event() valueChanged: EventEmitter<string | string[]>;
 
   @Element() el!: HTMLElement;
+
+  componentWillLoad() {
+    this.initializeDefaultSelection();
+  }
+
+  initializeDefaultSelection() {
+    if (this.defaultValue) {
+      const defaultValues = Array.isArray(this.defaultValue) ? this.defaultValue : [this.defaultValue];
+      this.selected = this.options.filter(option => defaultValues.includes(option.value));
+    }
+  }
 
   toggleDropdown(event: Event) {
     event.stopPropagation(); // Prevent unwanted dropdown toggling

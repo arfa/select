@@ -29,6 +29,7 @@ export class MyApp {
           enableSelectedItems
           enableSelectAll
           enableSearch
+          defaultValue={['first', 'third']}
           onValueChanged={(event: CustomEvent<string[] | string>) => this.handleOptionSelected(event)}
         ></my-select>
       </div>
