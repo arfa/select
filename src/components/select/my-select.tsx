@@ -9,9 +9,11 @@ export class MySelect {
   @Prop() label: string = 'Select an option';
   @Prop() options: { label: any; value: string }[] = [];
   @Prop() multiSelect: boolean = false;
+  @Prop() enableSearch: boolean = false;
 
   @State() isOpen: boolean = false;
   @State() selected: { label: any; value: string }[] = [];
+  @State() searchQuery: string = '';
 
   @Event() valueChanged: EventEmitter<string | string[]>;
 
@@ -20,9 +22,11 @@ export class MySelect {
   toggleDropdown(event: Event) {
     event.stopPropagation(); // Prevent unwanted dropdown toggling
     this.isOpen = !this.isOpen;
+
     if (this.isOpen) {
       document.addEventListener('click', this.handleOutsideClick);
     } else {
+      this.resetSearch(); // Reset search when closing
       document.removeEventListener('click', this.handleOutsideClick);
     }
   }
@@ -30,6 +34,7 @@ export class MySelect {
   handleOutsideClick = (event: MouseEvent) => {
     if (!this.el.contains(event.target as Node)) {
       this.isOpen = false;
+      this.resetSearch(); // Reset search when closing
       document.removeEventListener('click', this.handleOutsideClick);
     }
   };
@@ -47,6 +52,7 @@ export class MySelect {
       this.selected = [option];
       this.isOpen = false;
       this.valueChanged.emit(option.value);
+      this.resetSearch(); // Reset search when closing
       document.removeEventListener('click', this.handleOutsideClick);
     }
   }
@@ -55,6 +61,14 @@ export class MySelect {
     event.stopPropagation(); // Prevent dropdown toggle when clearing
     this.selected = [];
     this.valueChanged.emit(this.multiSelect ? [] : '');
+  }
+
+  handleSearch(event: Event) {
+    this.searchQuery = (event.target as HTMLInputElement).value;
+  }
+
+  resetSearch() {
+    this.searchQuery = ''; // Clear search query when dropdown closes
   }
 
   disconnectedCallback() {
@@ -72,6 +86,8 @@ export class MySelect {
   }
 
   render() {
+    const filteredOptions = this.enableSearch ? this.options.filter(option => option.label.toString().toLowerCase().includes(this.searchQuery.toLowerCase())) : this.options;
+
     return (
       <div class="select-container">
         <label>{this.label}</label>
@@ -89,17 +105,28 @@ export class MySelect {
           </div>
         </div>
         {this.isOpen && (
-          <ul class="dropdown">
-            {this.options.map(option => {
-              const isSelected = this.selected.some(sel => sel.value === option.value);
-              return (
-                <li class={isSelected ? 'selected' : ''} onClick={() => this.selectOption(option)}>
-                  {this.multiSelect && <input type="checkbox" checked={isSelected} />}
-                  {option.label}
-                </li>
-              );
-            })}
-          </ul>
+          <div class="dropdown">
+            {this.enableSearch && (
+              <div class="search-container">
+                <input type="text" placeholder="Search..." value={this.searchQuery} onInput={event => this.handleSearch(event)} />
+              </div>
+            )}
+            <ul>
+              {filteredOptions.length > 0 ? (
+                filteredOptions.map(option => {
+                  const isSelected = this.selected.some(sel => sel.value === option.value);
+                  return (
+                    <li class={isSelected ? 'selected' : ''} onClick={() => this.selectOption(option)}>
+                      {this.multiSelect && <input type="checkbox" checked={isSelected} />}
+                      {option.label}
+                    </li>
+                  );
+                })
+              ) : (
+                <li class="no-results">No results found</li>
+              )}
+            </ul>
+          </div>
         )}
       </div>
     );
