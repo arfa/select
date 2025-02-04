@@ -152,8 +152,8 @@ export class MySelect {
                 <div class="selected-items">
                   {this.selected.map(option => {
                     return (
-                      <li key={option.value} class="selected" onClick={() => this.selectOption(option)}>
-                        <input type="checkbox" checked />
+                      <li key={option.value} class="selected" onClick={() => this.selectOption(option)} tabIndex={0}>
+                        <input type="checkbox" checked tabIndex={-1} />
                         {option.label}
                       </li>
                     );
@@ -162,8 +162,8 @@ export class MySelect {
               )}
             </ul>
             {this.multiSelect && this.enableSelectAll && (
-              <div class="select-all" onClick={event => this.toggleSelectAll(event)}>
-                <input type="checkbox" checked={isAllSelected} />
+              <div class="select-all" onClick={event => this.toggleSelectAll(event)} tabIndex={0}>
+                <input type="checkbox" checked={isAllSelected} tabIndex={-1} />
                 <span>Select All</span>
               </div>
             )}
@@ -173,8 +173,8 @@ export class MySelect {
                 filteredOptions.map(option => {
                   const isSelected = this.selected.some(sel => sel.value === option.value);
                   return (
-                    <li key={option.value} class={isSelected ? 'selected' : ''} onClick={() => this.selectOption(option)}>
-                      {this.multiSelect && <input type="checkbox" checked={isSelected} />}
+                    <li key={option.value} class={isSelected ? 'selected' : ''} onClick={() => this.selectOption(option)} tabIndex={0}>
+                      {this.multiSelect && <input type="checkbox" checked={isSelected} tabIndex={-1} />}
                       {option.label}
                     </li>
                   );
