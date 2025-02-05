@@ -8,6 +8,13 @@
   width: 100%;
 }
 
+.select-container button:disabled,
+.select-container button:disabled .clear-btn,
+.select-container button:disabled .toggle-btn {
+  cursor: not-allowed;
+  background: #f0f0f0;
+}
+
 label {
   font-weight: bold;
   display: block;
@@ -46,10 +53,6 @@ label {
   cursor: pointer;
   font-size: 14px;
   padding: 5px;
-}
-
-.clear-btn:hover {
-  color: red;
 }
 
 .toggle-btn {

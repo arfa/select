@@ -14,6 +14,7 @@ export class MySelect {
   @Prop() enableSelectedItems: boolean = false;
   @Prop() defaultValue?: string | string[];
   @Prop() placeholder: string = 'Choose an option';
+  @Prop() disabled: boolean = false;
 
   @State() isOpen: boolean = false;
   @State() selected: { label: any; value: string }[] = [];
@@ -133,19 +134,15 @@ export class MySelect {
     return (
       <div class="select-container">
         <label>{this.label}</label>
-        <button class="select-box" onClick={event => this.toggleDropdown(event)}>
-          <span onClick={event => this.toggleDropdown(event)} title={this.getTitle()}>
-            {this.getItemSelectedLabel()}
-          </span>
+        <button class="select-box" onClick={event => this.toggleDropdown(event)} disabled={this.disabled}>
+          <span title={this.getTitle()}>{this.getItemSelectedLabel()}</span>
           <div class="buttons">
             {this.selected.length > 0 && (
-              <span class="clear-btn" onClick={event => this.clearSelection(event)}>
+              <span class="clear-btn" onClick={event => !this.disabled && this.clearSelection(event)}>
                 ✖
               </span>
             )}
-            <span class="toggle-btn" onClick={event => this.toggleDropdown(event)}>
-              {this.isOpen ? '▲' : '▼'}
-            </span>
+            <span class="toggle-btn">{this.isOpen ? '▲' : '▼'}</span>
           </div>
         </button>
         {this.isOpen && (
