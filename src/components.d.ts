@@ -23,6 +23,7 @@ export namespace Components {
         "middle": string;
     }
     interface MySelect {
+        "ListLabel": string;
         "defaultValue"?: string | string[];
         "disabled": boolean;
         "enableSearch": boolean;
@@ -31,6 +32,7 @@ export namespace Components {
         "multiSelect": boolean;
         "options": { label: any; value: string }[];
         "placeholder": string;
+        "selectedItemsLabel": string;
     }
 }
 export interface MySelectCustomEvent<T> extends CustomEvent<T> {
@@ -91,6 +93,7 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface MySelect {
+        "ListLabel"?: string;
         "defaultValue"?: string | string[];
         "disabled"?: boolean;
         "enableSearch"?: boolean;
@@ -100,6 +103,7 @@ declare namespace LocalJSX {
         "onValueChanged"?: (event: MySelectCustomEvent<string | string[]>) => void;
         "options"?: { label: any; value: string }[];
         "placeholder"?: string;
+        "selectedItemsLabel"?: string;
     }
     interface IntrinsicElements {
         "my-app": MyApp;

@@ -14,6 +14,8 @@ export class MySelect {
   @Prop() defaultValue?: string | string[];
   @Prop() placeholder: string = 'Choose an option';
   @Prop() disabled: boolean = false;
+  @Prop() selectedItemsLabel: string = 'Selected item(s)';
+  @Prop() ListLabel: string = 'List';
 
   @State() isOpen: boolean = false;
   @State() selected: { label: any; value: string }[] = [];
@@ -171,7 +173,7 @@ export class MySelect {
             )}
             {this.enableSelectedItems && this.multiSelect && this.selected.length > 0 && !this.searchQuery && (
               <div class="selected-items-title">
-                <span>Selected items</span>
+                <span>{this.selectedItemsLabel}</span>
               </div>
             )}
             <ul>
@@ -196,7 +198,7 @@ export class MySelect {
                 <span>Select All</span>
               </div>
             )}
-            {this.enableSelectedItems && this.multiSelect && this.selected.length > 0 && <div class="options-title">List</div>}
+            {this.enableSelectedItems && this.multiSelect && this.selected.length > 0 && <div class="options-title">{this.ListLabel}</div>}
             <ul>
               {filteredOptions.length > 0 ? (
                 filteredOptions.map(option => {
