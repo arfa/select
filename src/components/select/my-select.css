@@ -4,6 +4,10 @@
   position: relative;
 }
 
+.select-container button {
+  width: 100%;
+}
+
 label {
   font-weight: bold;
   display: block;

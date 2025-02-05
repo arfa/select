@@ -133,21 +133,21 @@ export class MySelect {
     return (
       <div class="select-container">
         <label>{this.label}</label>
-        <div class="select-box" onClick={event => this.toggleDropdown(event)}>
+        <button class="select-box" onClick={event => this.toggleDropdown(event)}>
           <span onClick={event => this.toggleDropdown(event)} title={this.getTitle()}>
             {this.getItemSelectedLabel()}
           </span>
           <div class="buttons">
             {this.selected.length > 0 && (
-              <button class="clear-btn" onClick={event => this.clearSelection(event)}>
+              <span class="clear-btn" onClick={event => this.clearSelection(event)}>
                 ✖
-              </button>
+              </span>
             )}
-            <button class="toggle-btn" onClick={event => this.toggleDropdown(event)}>
+            <span class="toggle-btn" onClick={event => this.toggleDropdown(event)}>
               {this.isOpen ? '▲' : '▼'}
-            </button>
+            </span>
           </div>
-        </div>
+        </button>
         {this.isOpen && (
           <div class="dropdown">
             {this.enableSearch && (
