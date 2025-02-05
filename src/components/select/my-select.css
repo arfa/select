@@ -31,7 +31,8 @@ label {
   background: white;
 }
 
-.select-box span {
+.select-box span,
+.option-label {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

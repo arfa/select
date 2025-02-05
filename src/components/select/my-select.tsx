@@ -181,7 +181,9 @@ export class MySelect {
                     return (
                       <li key={option.value} class="selected" onClick={() => this.selectOption(option)} tabIndex={0}>
                         <input type="checkbox" checked tabIndex={-1} />
-                        {option.label}
+                        <span class="option-label" title={option.label}>
+                          {option.label}
+                        </span>
                       </li>
                     );
                   })}
@@ -202,7 +204,9 @@ export class MySelect {
                   return (
                     <li key={option.value} class={isSelected ? 'selected' : ''} onClick={() => this.selectOption(option)} tabIndex={0}>
                       {this.multiSelect && <input type="checkbox" checked={isSelected} tabIndex={-1} />}
-                      {option.label}
+                      <span class="option-label" title={option.label}>
+                        {option.label}
+                      </span>
                     </li>
                   );
                 })
