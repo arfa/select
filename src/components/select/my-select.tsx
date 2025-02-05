@@ -169,13 +169,13 @@ export class MySelect {
                 <input type="text" placeholder="Search..." value={this.searchQuery} onInput={event => this.handleSearch(event)} />
               </div>
             )}
-            {this.enableSelectedItems && this.multiSelect && this.selected.length > 0 && (
+            {this.enableSelectedItems && this.multiSelect && this.selected.length > 0 && !this.searchQuery && (
               <div class="selected-items-title">
                 <span>Selected items</span>
               </div>
             )}
             <ul>
-              {this.enableSelectedItems && this.multiSelect && this.selected.length > 0 && (
+              {this.enableSelectedItems && this.multiSelect && this.selected.length > 0 && !this.searchQuery && (
                 <div class="selected-items">
                   {this.selected.map(option => {
                     return (
