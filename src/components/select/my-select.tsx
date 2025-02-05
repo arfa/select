@@ -6,7 +6,6 @@ import { Component, h, Prop, State, Event, EventEmitter, Element } from '@stenci
   shadow: false,
 })
 export class MySelect {
-  @Prop() label: string = 'Select an option';
   @Prop() options: { label: any; value: string }[] = [];
   @Prop() multiSelect: boolean = false;
   @Prop() enableSearch: boolean = false;
@@ -19,6 +18,7 @@ export class MySelect {
   @State() isOpen: boolean = false;
   @State() selected: { label: any; value: string }[] = [];
   @State() searchQuery: string = '';
+  @State() dropdownPosition: 'bottom' | 'top' = 'bottom';
 
   @Event() valueChanged: EventEmitter<string | string[]>;
 
@@ -40,10 +40,28 @@ export class MySelect {
     this.isOpen = !this.isOpen;
 
     if (this.isOpen) {
+      setTimeout(() => this.checkDropdownPosition(), 0); // Wait for render
       document.addEventListener('click', this.handleOutsideClick);
     } else {
       this.resetSearch(); // Reset search when closing
       document.removeEventListener('click', this.handleOutsideClick);
+    }
+  }
+
+  checkDropdownPosition() {
+    const selectBox = this.el.querySelector('.select-box');
+    const dropdown = this.el.querySelector('.dropdown');
+
+    if (selectBox && dropdown) {
+      const selectBoxRect = selectBox.getBoundingClientRect();
+      const dropdownRect = dropdown.getBoundingClientRect();
+      const dropdownHeight = dropdownRect.height; // Get visible height
+
+      const spaceBelow = window.innerHeight - selectBoxRect.bottom;
+      const spaceAbove = selectBoxRect.top;
+
+      // Set dropdown position based on available space
+      this.dropdownPosition = spaceBelow < dropdownHeight && spaceAbove > dropdownHeight ? 'top' : 'bottom';
     }
   }
 
@@ -133,7 +151,6 @@ export class MySelect {
 
     return (
       <div class="select-container">
-        <label>{this.label}</label>
         <button class="select-box" onClick={event => this.toggleDropdown(event)} disabled={this.disabled}>
           <span title={this.getTitle()}>{this.getItemSelectedLabel()}</span>
           <div class="buttons">
@@ -146,7 +163,7 @@ export class MySelect {
           </div>
         </button>
         {this.isOpen && (
-          <div class="dropdown">
+          <div class={`dropdown ${this.dropdownPosition}`}>
             {this.enableSearch && (
               <div class="search-container">
                 <input type="text" placeholder="Search..." value={this.searchQuery} onInput={event => this.handleSearch(event)} />

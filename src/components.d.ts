@@ -28,7 +28,6 @@ export namespace Components {
         "enableSearch": boolean;
         "enableSelectAll": boolean;
         "enableSelectedItems": boolean;
-        "label": string;
         "multiSelect": boolean;
         "options": { label: any; value: string }[];
         "placeholder": string;
@@ -97,7 +96,6 @@ declare namespace LocalJSX {
         "enableSearch"?: boolean;
         "enableSelectAll"?: boolean;
         "enableSelectedItems"?: boolean;
-        "label"?: string;
         "multiSelect"?: boolean;
         "onValueChanged"?: (event: MySelectCustomEvent<string | string[]>) => void;
         "options"?: { label: any; value: string }[];
