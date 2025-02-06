@@ -6,7 +6,7 @@ import { Component, h, Prop, State, Event, EventEmitter, Element } from '@stenci
   shadow: false,
 })
 export class MySelect {
-  @Prop() options: { label: any; value: string }[] = [];
+  @Prop({ mutable: true }) options: { label: any; value: string }[] = [];
   @Prop() multiSelect: boolean = false;
   @Prop() enableSearch: boolean = false;
   @Prop() enableSelectAll: boolean = false;
@@ -37,8 +37,7 @@ export class MySelect {
     }
   }
 
-  toggleDropdown(event: Event) {
-    event.stopPropagation(); // Prevent unwanted dropdown toggling
+  toggleDropdown() {
     this.isOpen = !this.isOpen;
 
     if (this.isOpen) {
@@ -153,7 +152,7 @@ export class MySelect {
 
     return (
       <div class="select-container">
-        <button class="select-box" onClick={event => this.toggleDropdown(event)} disabled={this.disabled}>
+        <button class="select-box" onClick={() => this.toggleDropdown()} disabled={this.disabled}>
           <span title={this.getTitle()}>{this.getItemSelectedLabel()}</span>
           <div class="buttons">
             {this.selected.length > 0 && (
