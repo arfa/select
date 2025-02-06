@@ -6,7 +6,8 @@ import { Component, h, Prop, State, Event, EventEmitter, Element } from '@stenci
   shadow: false,
 })
 export class MySelect {
-  @Prop({ mutable: true }) options: { label: any; value: string }[] = [];
+  @Prop({ mutable: true }) options: { label: string; value: string }[] = [];
+  @Prop() transfromLabel: (label: string) => any;
   @Prop() multiSelect: boolean = false;
   @Prop() enableSearch: boolean = false;
   @Prop() enableSelectAll: boolean = false;
@@ -206,7 +207,7 @@ export class MySelect {
                     <li key={option.value} class={isSelected ? 'selected' : ''} onClick={() => this.selectOption(option)} tabIndex={0}>
                       {this.multiSelect && <input type="checkbox" checked={isSelected} tabIndex={-1} />}
                       <span class="option-label" title={option.label}>
-                        {option.label}
+                        {this.transfromLabel ? this.transfromLabel(option.label) : option.label}
                       </span>
                     </li>
                   );

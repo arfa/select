@@ -12,9 +12,6 @@ export class MyApp {
     { label: 'Third Item', value: 'third' },
     { label: 'Fourth Item', value: 'fourth' },
     { label: 'Fifth Item', value: 'fifth' },
-    { label: 'Sixth Item', value: 'sixth' },
-    { label: 'Seventh Item', value: 'seventh' },
-    { label: 'Eighth Item', value: 'eighth' },
   ];
 
   handleOptionSelected(event: CustomEvent<string[] | string>) {
@@ -75,6 +72,7 @@ export class MyApp {
           enableSelectAll
           enableSearch
           defaultValue={['first', 'third']}
+          transfromLabel={(label: string) => <i>{label}</i>}
           onValueChanged={(event: CustomEvent<string[] | string>) => this.handleOptionSelected(event)}
         ></my-select>
       </div>
