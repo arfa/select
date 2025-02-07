@@ -1,0 +1,165 @@
+.select-container {
+  font-family: Arial, sans-serif;
+  min-width: 200px;
+  max-width: 250px;
+  position: relative;
+}
+
+.select-container button {
+  width: 100%;
+}
+
+.select-container button:disabled,
+.select-container button:disabled .clear-btn,
+.select-container button:disabled .toggle-btn {
+  cursor: not-allowed;
+  background: #f0f0f0;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.select-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background: white;
+}
+
+.select-box span,
+.option-label {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.select-box:hover {
+  background: #f0f0f0;
+}
+
+.buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.clear-btn,
+.toggle-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px;
+}
+
+.toggle-btn {
+  font-weight: bold;
+}
+
+.dropdown {
+  position: absolute;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  max-height: 234px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.dropdown.bottom {
+  top: 100%;
+  margin-top: 1px;
+}
+
+.dropdown.top {
+  bottom: 100%;
+  margin-bottom: 1px;
+}
+
+.search-container {
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.select-all {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.select-all input {
+  margin-right: 8px;
+}
+
+.dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown li {
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.dropdown li:hover {
+  background: #f0f0f0;
+}
+
+.selected {
+  font-weight: bold;
+  color: green;
+  background: var(--cib-color-cacib-100);
+}
+
+.no-results {
+  padding: 8px;
+  text-align: center;
+  color: grey;
+}
+
+.counter-wrapper {
+  display: flex;
+  justify-content: inbetween;
+  align-items: center;
+}
+
+.counter {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  min-width: 20px;
+  height: 20px;
+  padding: 5px;
+  border-radius: 100%;
+  background: green;
+  color: white;
+}
+
+.counter-text {
+  margin-left: 5px;
+}
+
+.selected-items-title,
+.options-title {
+  color: grey;
+  font-size: 14px;
+  padding: 8px;
+}
