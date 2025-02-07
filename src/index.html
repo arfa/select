@@ -20,5 +20,12 @@
       options-string='[{ "label": "Option 1", "value": "1" }, { "label": "Option 2", "value": "2" },{ "label": "Option 3", "value": "3" }]'>
     </my-select>
 
+    <script>
+      const customSelect = document.getElementById('customSelect');
+      customSelect.addEventListener('valueChanged', (event) => {
+        console.log('Selected value:', event.detail);
+      });
+    </script>
+
   </body>
 </html>
