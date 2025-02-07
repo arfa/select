@@ -7,6 +7,7 @@ import { Component, h, Prop, State, Event, EventEmitter, Element } from '@stenci
 })
 export class MySelect {
   @Prop({ mutable: true }) options: { label: string; value: string }[] = [];
+  @Prop() optionsString: string;
   @Prop() transfromLabel: (label: string) => any;
   @Prop() multiSelect: boolean = false;
   @Prop() enableSearch: boolean = false;
@@ -28,6 +29,14 @@ export class MySelect {
   @Element() el!: HTMLElement;
 
   componentWillLoad() {
+    if (this.optionsString) {
+        try {
+            this.options = JSON.parse(this.optionsString);
+        } catch (error) {
+            console.error("Invalid JSON format for options:", error);
+        }
+    }
+
     this.initializeDefaultSelection();
   }
 

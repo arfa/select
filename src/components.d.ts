@@ -31,6 +31,7 @@ export namespace Components {
         "enableSelectedItems": boolean;
         "multiSelect": boolean;
         "options": { label: string; value: string }[];
+        "optionsString": string;
         "placeholder": string;
         "selectedItemsLabel": string;
         "transfromLabel": (label: string) => any;
@@ -103,6 +104,7 @@ declare namespace LocalJSX {
         "multiSelect"?: boolean;
         "onValueChanged"?: (event: MySelectCustomEvent<string | string[]>) => void;
         "options"?: { label: string; value: string }[];
+        "optionsString"?: string;
         "placeholder"?: string;
         "selectedItemsLabel"?: string;
         "transfromLabel"?: (label: string) => any;
